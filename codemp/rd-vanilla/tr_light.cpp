@@ -329,7 +329,7 @@ void R_SetupEntityLighting( const trRefdef_t *refdef, trRefEntity_t *ent ) {
 	}
 
 	// if NOWORLDMODEL, only use dynamic lights (menu system, etc)
-	if ( !(refdef->rdflags & RDF_NOWORLDMODEL )
+	/*if (!(refdef->rdflags & RDF_NOWORLDMODEL)
 		&& tr.world->lightGridData ) {
 		R_SetupEntityLightingGrid( ent );
 	} else {
@@ -338,6 +338,15 @@ void R_SetupEntityLighting( const trRefdef_t *refdef, trRefEntity_t *ent ) {
 		ent->directedLight[0] = ent->directedLight[1] =
 			ent->directedLight[2] = tr.identityLight * 150;
 		VectorCopy( tr.sunDirection, ent->lightDir );
+	}*/
+	if (tr.world != NULL) //I always want lighting grid information if available. If additional lighting is needed, it can be should be done manually. - Khorne
+	{
+		R_SetupEntityLightingGrid(ent);
+	}
+	else {
+		ent->ambientLight[0] = ent->ambientLight[1] = ent->ambientLight[2] = tr.identityLight * 150;
+		ent->directedLight[0] = ent->directedLight[1] = ent->directedLight[2] = tr.identityLight * 150;
+		VectorCopy(tr.sunDirection, ent->lightDir);
 	}
 
 	// bonus items and view weapons have a fixed minimum add

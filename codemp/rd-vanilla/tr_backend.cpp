@@ -1642,7 +1642,8 @@ const void	*RB_DrawSurfs( const void *data ) {
 	*/
 
 	// Render dynamic glowing/flaring objects.
-	if ( !(backEnd.refdef.rdflags & RDF_NOWORLDMODEL) && g_bDynamicGlowSupported && r_DynamicGlow->integer )
+	// As long as the current refdef width is the same as view width, it should be safe to render dynamic glow. - Khorne
+	if (!(backEnd.refdef.rdflags & RDF_NOWORLDMODEL) && g_bDynamicGlowSupported && r_DynamicGlow->integer || backEnd.refdef.width == glConfig.vidWidth)
 	{
 		// Copy the normal scene to texture.
 		qglDisable( GL_TEXTURE_2D );
